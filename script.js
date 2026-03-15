@@ -1,53 +1,4 @@
-var typed = new Typed(".text",{
-    strings:["fronted developer","backend developer", "web developer",],
-    typeSpeed: 10,
-    backSpeed: 100,
-    backDelay: 1000,
-    loop: true
-});
-
-
-
-// function startVoice(){
-// const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-// const recognition = new SpeechRecognition();
-
-// recognition.lang = "en-US";
-// recognition.continous=true;
-// recognition.interimResults = false;
-
-// recognition.start();
-
-// recognition.onresult = function(event){
-
-// let command = event.results[0][0].transcript.toLowerCase();
-
-// console.log(command);
-
-// if(command.includes("home")){
-// document.getElementById("home").scrollIntoView({behavior:"smooth"});
-// }
-
-// else if(command.includes("about")){
-// document.getElementById("about").scrollIntoView({behavior:"smooth"});
-// }
-
-// else if(command.includes("skills")){
-// document.getElementById("skills").scrollIntoView({behavior:"smooth"});
-// }
-
-// else if(command.includes("projects")){
-// document.getElementById("projects").scrollIntoView({behavior:"smooth"});
-// }
-
-// else if(command.includes("contact")){
-// document.getElementById("contact").scrollIntoView({behavior:"smooth"});
-// }
-
-// };
-
-// }
-// ==================== Typing Animation ====================
+// ==================== Typing Effect ====================
 var typed = new Typed(".text", {
     strings: ["fronted developer", "backend developer", "web developer"],
     typeSpeed: 10,
@@ -92,28 +43,34 @@ function startVoice() {
     };
 }
 
-// ==================== Contact Form Submit (Email Sender) ====================
+// ==================== Contact Form Submit ====================
 
 document.getElementById("contact-form").addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const formData = {
-        name: e.target.name.value,
-        email: e.target.email.value,
-        message: e.target.message.value
-    };
+    const nameValue = document.getElementById("name").value;
+    const emailValue = document.getElementById("email").value;
+    const messageValue = document.getElementById("message").value;
 
     fetch("https://prem-portfolio-rkl5.onrender.com/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            alert("Message sent successfully!");
-            e.target.reset();
+        body: JSON.stringify({
+            name,
+            email,
+            message
         })
-        .catch((err) => {
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("Message Sent Successfully!");
+                e.target.reset();
+            } else {
+                alert("Failed: " + data.message);
+            }
+        })
+        .catch(err => {
             console.error(err);
             alert("Something went wrong while sending the message!");
         });
