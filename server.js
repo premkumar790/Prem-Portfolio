@@ -49,6 +49,25 @@
 //   console.log("Server running on http://localhost:5000");
 // });
 
+
+fetch("https://prem-portfolio-rkl5.onrender.com/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        name: nameValue,
+        email: emailValue,
+        message: messageValue
+    })
+})
+.then(res => res.json())
+.then(data => {
+    console.log(data);
+    alert("Message Sent Successfully!");
+})
+.catch(err => {
+    console.error(err);
+    alert("Error sending message!");
+});
 require("dotenv").config();
 const express = require("express");
 const nodemailer = require("nodemailer");
